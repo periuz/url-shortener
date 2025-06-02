@@ -1,18 +1,18 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../services/sequelize');
+const sequelize = require('../config/database');
 
 const Url = sequelize.define('Url', {
-  originalUrl: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  shortUrl: {
+  shortId: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
+  originalUrl: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+}, {
+  timestamps: true,
 });
-
-Url.sync();
 
 module.exports = Url;

@@ -1,0 +1,36 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: code-checkout
+      uses: actions/checkout@v3
+
+    - name: node-setup
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: install-dependencies
+      run: npm install
+      working-directory: ./api
+
+    - name: verify-sintaxe
+      run: npm run lint || echo "No lint configured"
+      working-directory: ./api
+
+    - name: test-veuild
+      run: npm run build || echo "No build step"
+      working-directory: ./api
+
+    - name: run-tests
+      run: echo "No tests yep"
+      working-directory: ./api
