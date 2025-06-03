@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const Url = sequelize.define('Url', {
-  shortId: {
+  shortUrl: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
