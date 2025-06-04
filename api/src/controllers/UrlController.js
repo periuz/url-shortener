@@ -4,19 +4,19 @@ module.exports = {
   async shorten(req, res) {
     const { nanoid } = await import('nanoid');
     const { originalUrl } = req.body;
-    const shortUrl = nanoid(7);
+    const shortId = nanoid(7);
 
-    await Url.create({ originalUrl, shortUrl });
+    await Url.create({ originalUrl, shortId });
 
     return res.json({
-      shortUrl: `${process.env.BASE_URL}/${shortUrl}`,
+      shortId: `${process.env.BASE_URL}/${shortId}`,
     });
   },
 
   async redirect(req, res) {
-    const { shortUrl } = req.params;
+    const { shortId } = req.params;
 
-    const url = await Url.findOne({ where: { shortUrl } });
+    const url = await Url.findOne({ where: { shortId } });
 
     if (url) {
       return res.redirect(url.originalUrl);
