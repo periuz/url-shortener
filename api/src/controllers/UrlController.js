@@ -9,7 +9,7 @@ module.exports = {
     await Url.create({ originalUrl, shortId });
 
     return res.json({
-      shortId: `${process.env.BASE_URL}/${shortId}`,
+      shortUrl: `${process.env.BASE_URL}/${shortId}`,
     });
   },
 
