@@ -6,6 +6,6 @@ const urlController = require('../controllers/UrlController');
 router.post('/shorten', urlController.shorten);
 
 // Rota para redirecionar a URL curta
-router.get('/:code', urlController.redirect);
+router.get('/:shortId', urlController.redirect);
 
 module.exports = router;
