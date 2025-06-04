@@ -35,7 +35,7 @@ function App() {
         <form onSubmit={handleSubmit}>
           <input
             type="url"
-            placeholder="Cole sua URL aqui"
+            placeholder="Cole sua URL aqui. Ex: https://www.google.com"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             className="w-full border p-2 rounded mb-4"
