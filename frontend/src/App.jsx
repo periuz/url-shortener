@@ -14,7 +14,7 @@ function App() {
     setShortUrl('');
 
     try {
-      const response = await axios.post('https://url-shortener-y1dh.onrender.com/api/shorten', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/shorten`, {
         originalUrl: url,
       });
 
