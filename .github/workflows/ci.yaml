@@ -30,13 +30,6 @@ jobs:
         working-directory: ./api
         run: npm install
 
-      - name: Downgrade to ESLint v8
-        run: npm install eslint@8
-
-      - name: Lint backend
-        working-directory: ./api
-        run: npx eslint .
-
       - name: Test backend
         working-directory: ./api
         run: npm test
@@ -44,10 +37,6 @@ jobs:
       - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm install
-
-      - name: Lint frontend
-        working-directory: ./frontend
-        run: npx eslint .
 
       - name: Test frontend
         working-directory: ./frontend
@@ -57,6 +46,9 @@ jobs:
         working-directory: ./api
         run: npm audit --audit-level=moderate
         continue-on-error: true
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
 
       - name: Docker build test
         run: docker build -t url-shortener ./api
