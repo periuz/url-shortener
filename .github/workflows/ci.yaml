@@ -30,6 +30,9 @@ jobs:
         working-directory: ./api
         run: npm install
 
+      - name: Downgrade to ESLint v8
+        run: npm install eslint@8
+
       - name: Lint backend
         working-directory: ./api
         run: npx eslint .
