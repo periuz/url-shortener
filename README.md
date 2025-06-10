@@ -153,7 +153,7 @@ url-shortener/
 
 ---
 
-Made with by Thiago Perius 
+Made by Thiago Perius 
 
 ---
 

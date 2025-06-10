@@ -1,36 +1,59 @@
-name: Node.js CI/CD
+name: CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: code-checkout
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: node-setup
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - name: install-dependencies
-      run: npm install
-      working-directory: ./api
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - name: verify-sintaxe
-      run: npm run lint || echo "No lint configured"
-      working-directory: ./api
+      - name: Install backend dependencies
+        working-directory: ./api
+        run: npm install
 
-    - name: test-veuild
-      run: npm run build || echo "No build step"
-      working-directory: ./api
+      - name: Lint backend
+        working-directory: ./api
+        run: npx eslint .
 
-    - name: run-tests
-      run: echo "No tests yep"
-      working-directory: ./api
+      - name: Test backend
+        working-directory: ./api
+        run: npm test
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Lint frontend
+        working-directory: ./frontend
+        run: npx eslint .
+
+      - name: Test frontend
+        working-directory: ./frontend
+        run: npm test
+
+      - name: Audit backend
+        working-directory: ./api
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Docker build test
+        run: docker build -t url-shortener ./api
