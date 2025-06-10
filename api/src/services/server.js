@@ -1,8 +1,13 @@
 const express = require('express');
 const sequelize = require('../config/database');
 const routes = require('../routes');
-
+const cors = require('cors');
+const express = require('express');
 const app = express();
+
+app.use(cors({
+  origin: 'https://url-shortener-frontend-jvh1.onrender.com',
+}));
 
 app.use(express.json());
 app.use('/', routes);
